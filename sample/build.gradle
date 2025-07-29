@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 33
     defaultConfig {
-        applicationId "com.hgdendi.expandablerecyclerview"
+        applicationId "com.lanmeng.functiontest"
         minSdkVersion 19
         targetSdkVersion 33
         versionCode 1

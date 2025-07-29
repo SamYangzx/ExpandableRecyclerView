@@ -493,7 +493,8 @@ public abstract class BaseExpandableRecyclerViewAdapter
         boolean onInterceptGroupExpandEvent(GroupBean groupItem, boolean isExpand);
 
         /**
-         * called when an unexpandable group item is clicked
+         * called when an unexpandable group item is clicked.
+         * 可展开时不会处理点击事件。
          *
          * @param groupItem
          */

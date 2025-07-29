@@ -1,4 +1,4 @@
-package com.hgdendi.expandablerecyclerview;
+package com.lanmeng.functiontest;
 
 public class SampleChildBean {
     private String mName;
