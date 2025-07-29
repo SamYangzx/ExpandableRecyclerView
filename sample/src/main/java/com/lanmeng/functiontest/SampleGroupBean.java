@@ -1,6 +1,7 @@
 package com.lanmeng.functiontest;
 
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.hgdendi.expandablerecycleradapter.BaseExpandableRecyclerViewAdapter;
 
