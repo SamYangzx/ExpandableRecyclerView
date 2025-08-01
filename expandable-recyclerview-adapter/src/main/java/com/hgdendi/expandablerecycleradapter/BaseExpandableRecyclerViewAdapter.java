@@ -233,6 +233,24 @@ public abstract class BaseExpandableRecyclerViewAdapter
         return result;
     }
 
+    /**
+     *  lanmeng
+     * 货币流动的作用：
+     * 1. 人要想未来兑换物质，就要产生积累；
+     * 2. 货币与物质的兑换能力，人与人流通货币对物质的相对占比；
+     *
+     * 有人想要人为制造货币流动，
+     * 1. 驱使人们做事；
+     * 2. 实现自身财富积累；
+     *
+     * 操作方式
+     * 1. 权力机制；
+     * 1） 税收；
+     * 2） 工程政策问题；
+     * 2. 经济机制；
+     * @param groupIndex index
+     * @return position in adapter
+     */
     public final int getAdapterPosition(int groupIndex) {
         int result = groupIndex;
         for (GroupBean groupBean : mExpandGroupSet) {

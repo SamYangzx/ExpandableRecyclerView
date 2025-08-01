@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -90,6 +91,7 @@ public class MyForegroundService extends Service {
                                 try {
                                     Thread.sleep(1000);
                                 } catch (InterruptedException e) {
+                                    Log.e(TAG, "sleep: ", e);
                                 }
                             }
                             builder.setContentText("下载完成")

@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hgdendi.expandablerecycleradapter.BaseExpandableRecyclerViewAdapter;
 import com.hgdendi.expandablerecycleradapter.ViewProducer;
+import com.lanmeng.functiontest.util.FunctionConfig;
+import com.lanmeng.functiontest.util.RootChecker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +90,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleBeanClick(SampleGroupBean groupItem, SampleChildBean childItem) {
-        Toast.makeText(mContext, String.format(Locale.getDefault(), "group=%s, child=%s", groupItem.getName(), childItem.getName()) , Toast.LENGTH_SHORT).show();
+
+//        Toast.makeText(mContext, String.format(Locale.getDefault(), "group=%s, child=%s", groupItem.getName(), childItem.getName()) , Toast.LENGTH_SHORT).show();
+        switch (childItem.getName()){
+            case "Root":
+                Toast.makeText(mContext, String.format("%s : %b", childItem.getName() ,RootChecker.isDeviceRooted()), Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+        }
     }
 
     private void initData() {
@@ -98,7 +108,9 @@ public class MainActivity extends AppCompatActivity {
         dataList.add(new SampleGroupBean(childList, "Java"));
 
         childList = new ArrayList<>();
-        childList.add(new SampleChildBean("root"));
+        for (String item : FunctionConfig.DEBUG_ARRAY) {
+            childList.add(new SampleChildBean(item));
+        }
         dataList.add(new SampleGroupBean(childList, "Debug"));
     }
 }
