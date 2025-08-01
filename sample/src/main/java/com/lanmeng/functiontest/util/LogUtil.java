@@ -1,6 +1,7 @@
 package com.lanmeng.functiontest.util;
 
 import android.os.Build;
+import android.util.Log;
 
 import java.util.Locale;
 
@@ -22,7 +23,7 @@ public class LogUtil {
     /**
      * debug 系统版本默认开启详细log。
      */
-    private static int logType = Build.TYPE.equals("userdebug") ? DETAIL : NORMAL;
+    private static boolean detailLog = Build.TYPE.equals("userdebug");
 
     private static int level = VERBOSE;
 
@@ -34,13 +35,6 @@ public class LogUtil {
         return SingleTonHolder.INSTANCE;
     }
 
-    public static void setLogType(int type) {
-        logType = type;
-    }
-
-    public static int getLogType() {
-        return logType;
-    }
 
     public static void setLogLevel(int l) {
         level = l;
@@ -63,11 +57,10 @@ public class LogUtil {
             return -1;
         }
         if (level <= VERBOSE) {
-            if (logType == NORMAL) {
-                return android.util.Log.v(tag, msg);
-            }
-            if (logType == DETAIL) {
-                return android.util.Log.v(tag, buildLogMsg(msg));
+            if (detailLog) {
+                return Log.v(tag, buildLogMsg(msg));
+            }else {
+                return Log.v(tag, msg);
             }
         }
         return -1;
@@ -78,11 +71,10 @@ public class LogUtil {
             return -1;
         }
         if (level <= DEBUG) {
-            if (logType == NORMAL) {
-                return android.util.Log.d(tag, msg);
-            }
-            if (logType == DETAIL) {
-                return android.util.Log.d(tag, buildLogMsg(msg));
+            if (detailLog) {
+                return Log.d(tag, buildLogMsg(msg));
+            }else {
+                return Log.d(tag, msg);
             }
         }
         return -1;
@@ -93,11 +85,23 @@ public class LogUtil {
             return -1;
         }
         if (level <= INFO) {
-            if (logType == NORMAL) {
-                return android.util.Log.i(tag, msg);
+            if (detailLog) {
+                return Log.i(tag, buildLogMsg(msg));
+            }else {
+                return Log.i(tag, msg);
             }
-            if (logType == DETAIL) {
-                return android.util.Log.i(tag, buildLogMsg(msg));
+        }
+        return -1;
+    }
+    public static int w(String tag, String msg) {
+        if (!mbLoggable) {
+            return -1;
+        }
+        if (level <= WARN) {
+            if (detailLog) {
+                return Log.w(tag, buildLogMsg(msg));
+            }else {
+                return Log.w(tag, msg);
             }
         }
         return -1;
@@ -108,26 +112,10 @@ public class LogUtil {
             return -1;
         }
         if (level <= ERROR) {
-            if (logType == NORMAL) {
-                return android.util.Log.e(tag, msg);
-            }
-            if (logType == DETAIL) {
-                return android.util.Log.e(tag, buildLogMsg(msg));
-            }
-        }
-        return -1;
-    }
-
-    public static int w(String tag, String msg) {
-        if (!mbLoggable) {
-            return -1;
-        }
-        if (level <= WARN) {
-            if (logType == NORMAL) {
-                return android.util.Log.w(tag, msg);
-            }
-            if (logType == DETAIL) {
-                return android.util.Log.w(tag, buildLogMsg(msg));
+            if (detailLog) {
+                return Log.e(tag, buildLogMsg(msg));
+            }else {
+                return Log.e(tag, msg);
             }
         }
         return -1;

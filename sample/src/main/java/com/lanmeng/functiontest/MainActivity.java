@@ -14,6 +14,7 @@ import com.hgdendi.expandablerecycleradapter.BaseExpandableRecyclerViewAdapter;
 import com.hgdendi.expandablerecycleradapter.ViewProducer;
 import com.lanmeng.functiontest.util.FunctionConfig;
 import com.lanmeng.functiontest.util.RootChecker;
+import com.lanmeng.functiontest.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,11 +91,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleBeanClick(SampleGroupBean groupItem, SampleChildBean childItem) {
-
 //        Toast.makeText(mContext, String.format(Locale.getDefault(), "group=%s, child=%s", groupItem.getName(), childItem.getName()) , Toast.LENGTH_SHORT).show();
         switch (childItem.getName()){
             case "Root":
-                Toast.makeText(mContext, String.format("%s : %b", childItem.getName() ,RootChecker.isDeviceRooted()), Toast.LENGTH_SHORT).show();
+                ToastUtil.showTest(childItem.getName(), RootChecker.isDeviceRooted());
                 break;
             default:
                 break;

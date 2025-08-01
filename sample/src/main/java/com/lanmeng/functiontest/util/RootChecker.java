@@ -1,5 +1,7 @@
 package com.lanmeng.functiontest.util;
 
+import android.os.Build;
+
 import java.io.File;
 
 public class RootChecker {
@@ -7,6 +9,7 @@ public class RootChecker {
         return checkRootFiles() ||
 //                checkInstalledRootApps() ||
                 checkSuCommandAvailable() ||
+                isDbgVersion() ||
                 isTestKeysBuild();
     }
 
@@ -52,6 +55,10 @@ public class RootChecker {
     private static boolean isTestKeysBuild() {
         String tags = android.os.Build.TAGS;
         return tags != null && tags.contains("test-keys");
+    }
+
+    private static boolean isDbgVersion() {
+        return !Build.TYPE.equals("user");
     }
 
     private static boolean execShellCommand(String command) {
