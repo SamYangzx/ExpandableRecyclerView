@@ -2,4 +2,8 @@
     <string name="app_name">FunctionTest</string>
     <string name="header">header</string>
     <string name="empty">empty</string>
+
+
+    <string name="start_to_update">Status: 3/5</string>
+    <string name="notification_title">You can use device normally, when updating background.</string>
 </resources>

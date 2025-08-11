@@ -248,6 +248,19 @@ public abstract class BaseExpandableRecyclerViewAdapter
      * 1） 税收；
      * 2） 工程政策问题；
      * 2. 经济机制；
+     * 1) 容灾强，熬死对方；
+     * 2） 规模成本优势；强者恒强；
+     * 3） 消息流：减少冒险和防守的成本与概率；
+     *
+     * 资本类型：
+     * 1）商品（通胀上升）、
+     * 2）现金（经济下行期）、
+     * 3）债券（经济衰退）、
+     * 4）股票（经济恢复期）；
+     * 5）黄金（美元走势弱；降息期会导致黄金价格上升。不稳定性增加）
+     *
+     *
+     *
      * @param groupIndex index
      * @return position in adapter
      */

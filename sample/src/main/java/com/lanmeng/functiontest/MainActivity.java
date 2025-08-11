@@ -1,6 +1,7 @@
 package com.lanmeng.functiontest;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -96,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
             case "Root":
                 ToastUtil.showTest(childItem.getName(), RootChecker.isDeviceRooted());
                 break;
+            case "UI":
+                startActivity(new Intent(mContext, UIActivity.class));
+                break;
             default:
                 break;
         }
@@ -112,5 +116,11 @@ public class MainActivity extends AppCompatActivity {
             childList.add(new SampleChildBean(item));
         }
         dataList.add(new SampleGroupBean(childList, "Debug"));
+
+        childList = new ArrayList<>();
+        for (String item : FunctionConfig.UI_ARRAY) {
+            childList.add(new SampleChildBean(item));
+        }
+        dataList.add(new SampleGroupBean(childList, "UI"));
     }
 }
