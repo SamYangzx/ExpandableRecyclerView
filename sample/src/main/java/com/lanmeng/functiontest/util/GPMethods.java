@@ -213,7 +213,8 @@ public class GPMethods {
     /*
      * 将16进制数字解码成字符串,适用于所有字符（包括中文）
      */
-    public static String hexStr2Str(String bytes) {
+    public static String hexStr2Str(String unCheckS) {
+        String bytes = unCheckS.replace(" ", "");
         if (bytes == null || bytes.length() % 2 != 0) {
             System.out.println("hexStr2Str 参数错误！！！");
             return "";

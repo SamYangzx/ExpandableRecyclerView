@@ -12,7 +12,9 @@ import java.util.Base64;
 import javax.crypto.Cipher;
 
 public class RSAEncryptDecryptExample {
-    // 🔐 你的公钥和私钥字符串（替换成你自己的！！！）
+    /**
+     * PKCS#8 X.509 SubjectPublicKeyInfo 格式）
+     */
     static String publicKeyPem = "-----BEGIN PUBLIC KEY-----\n" +
             "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhS8klZcFlHyOCoC6BVh3HpKQMvG8TNg4Ju0JW8Ko5GD5abLchtnPeK55OkLBJ4qoehp8mAq31ncU5ZCNh06wiPLNC9koyMSdrRdhLAmZ/MGGJMubkqLPgZWq8cfTiAYersGUxtqGRVRE8q9XMvRK30OjUafVdpPCipYIPXKiBPdPtiWmC0t6o5KRhnGMmtaSAb+29uIVT+akMLHT4BTIy9uesFRJyxW1XrAb2DOoxb5UYEPtobjLVb1d90VYXz5x48ITSbJlWzvpnorgWBr9gwLBXDYK8Q0om+zktlP7qxK5VszEWxprEkEkimMnUkceEQhiDOzclc6UHjyMoIVvnQIDAQAB\n" +
             "-----END PUBLIC KEY-----";
@@ -23,8 +25,9 @@ public class RSAEncryptDecryptExample {
             "-----END PRIVATE KEY-----";
 
     private static final String ENCRYPT_ALG = "RSA/ECB/NoPadding";
-    static String hexString = "000000006D31C241103E8F3B0CC2E29A9E5565F679C9397835F806DDB5DE41D7C2308A336B9CD704514BBE725461207793D17A1F3E77CDAAC1211186DA8BA6847369DEA7F3472D9CDDB06AE187308F62035DEF60DCD5B6A9BAD60DF98F13A84F363280886D25BB609EBDC9A5E49EBF7CDD69D1E26D4E5AE273807486D89542F4A0010C03CD3C1C07F992EF3DC3B454995CC39C3903A8AB380DEC782CAAFB6286BD74A7A611CB627307A4F638FC7A923DEFB0E726D39A348349D88B19CD94D48BE05D02400B12097CF0FF91409763DCA6D0C9C0D3D56FD35216AC2D397ADA55D6AE9513FF6DA71296E5DA5C1FBE08BCF226D8E7335A0930E98C3CCE7625D2026E";
-    static String originalText = GPMethods.hexStr2Str(hexString);
+//    static String hexString = "00000000A9D50287D8406B269A3D3F8549FE157AE26066F0D8DEDA231276BDAE50CCBBA4AF4E1714BD259575F088B33711E04EF01E438DA9E3E1D55ED2503A04C8BF30C10F631F024DD349FD009AABE38E79F6861F727E3B35C67E2FBE6D733F95DE9333A597B917CB0F85211209CC2A9BAE4A80624ADE67D625C166B1CF2BDD22D36DC23D0AA1DD1294A8F9F79AD83EC240DDA0302CBA572049B09483D6C256B7BBD86E74678698E27FDB1381C9818B0656260E226220C0B86D5770E99B73B4B3333827BC857BAEEBEFDE2DDD41A19E13F83546039696706E65F8967C6B55F12C4CDFE22BEEB96FF18DC03D2AD6DDB1D3C008926BF8DF32BB4C9ECDFC5D295D";
+    static String hexString = "00 00 00 00 3A 2E A5 05 C8 9B A0 1D 24 05 09 05 9E C3 5B 32 6E 82 D7 58 D6 BA 39 A6 33 E4 27 12 7A BF FB DA CD 9C F5 26 CB 52 C0 C7 91 97 1D 98 33 C5 6D 50 5A 8B F1 6D FB AE 56 BA C3 75 51 76 9C 56 70 73 B4 10 96 6C E6 EC 63 18 B4 BB 48 95 45 6B 60 72 7A B6 D9 A3 F2 3A 19 ED 46 4E E8 95 20 C2 6E 9B 8D F9 28 4C B2 EE ED 3A 48 83 12 B2 9D 0D F4 3B 41 D4 D0 49 52 5B 17 A5 0A 36 18 C0 67 F6 88 47 9A 04 A5 E4 72 40 A6 DD 16 4C C7 40 EB EA D5 C0 38 3B 0F 0A 83 C7 62 08 F0 F3 E5 A9 9E 2F 18 AE 0A 35 50 EA 03 81 0A 93 AC 0E DD 79 D6 4F FA A8 B3 66 A1 65 13 CB 56 90 45 55 9D E5 A5 0B A2 D3 D3 A8 D4 D5 3D 70 3E 20 95 F6 27 FF 3B 7E 67 E3 3F 9E FD 1A 4F AD 7E F6 E8 EC 95 11 1D 48 2F 81 4E 52 8A 7C 2C 52 69 8F 5A 7C A7 78 F1 2D 6A 1E 73 62 52 42 0C E2 AC 96 9E 4B 0A 52 ";
+//    static String originalText = GPMethods.hexStr2Str(hexString);
     static byte[] originBytes = GPMethods.hexToByteArr(hexString);
 
 
@@ -65,20 +68,20 @@ public class RSAEncryptDecryptExample {
     }
 
     // =========================
-    // 3. 公钥加密
+    // 3. 私钥加密
     // =========================
-    public static byte[] encrypt(byte[] data, PublicKey publicKey) throws Exception {
+    public static byte[] encrypt(byte[] data, PrivateKey privateKey) throws Exception {
         Cipher cipher = Cipher.getInstance(ENCRYPT_ALG); // 或 RSA/ECB/OAEPWithSHA-1AndMGF1Padding
-        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        cipher.init(Cipher.ENCRYPT_MODE, privateKey);
         return cipher.doFinal(data);
     }
 
     // =========================
-    // 4. 私钥解密
+    // 4. 公钥解密
     // =========================
-    public static byte[] decrypt(byte[] encryptedData, PrivateKey privateKey) throws Exception {
+    public static byte[] decrypt(byte[] encryptedData, PublicKey publicKey) throws Exception {
         Cipher cipher = Cipher.getInstance(ENCRYPT_ALG); // 与加密保持一致
-        cipher.init(Cipher.DECRYPT_MODE, privateKey);
+        cipher.init(Cipher.DECRYPT_MODE, publicKey);
         return cipher.doFinal(encryptedData);
     }
 
@@ -120,7 +123,7 @@ public class RSAEncryptDecryptExample {
         try {
             // 📝 要加密的原文
 
-            System.out.println("[原文] " + originalText);
+            System.out.println("[原文] " + GPMethods.bytesToHexString(originBytes));
 
             // 🔒 加载密钥
             PublicKey publicKey = loadPublicKey(publicKeyPem);
@@ -130,7 +133,7 @@ public class RSAEncryptDecryptExample {
             // 🛡️ 加密
             byte[] encryptedBytes = encrypt(
                     originBytes, //originalText.getBytes(StandardCharsets.UTF_8),
-                    publicKey
+                    privateKey
             );
             System.out.println("[加密后（Base64）] " + Base64.getEncoder().encodeToString(encryptedBytes));
             System.out.println("[加密后 ] " + GPMethods.bytesToHexString(encryptedBytes));
@@ -139,7 +142,7 @@ public class RSAEncryptDecryptExample {
             System.out.println("public data cmd: "+ generatePubKeyCmd(getKeyModulus(publicKey)));
 
             // 🔓 解密
-            byte[] decryptedBytes = decrypt(encryptedBytes, privateKey);
+            byte[] decryptedBytes = decrypt(encryptedBytes, publicKey);
             String decryptedText = new String(decryptedBytes, StandardCharsets.UTF_8);
             System.out.println("[解密后] " + decryptedText);
             System.out.println("[解密后hex ] " + GPMethods.bytesToHexString(decryptedBytes));
